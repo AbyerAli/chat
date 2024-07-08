@@ -1,0 +1,30 @@
+{
+  "name": "expressjs-socketio-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.16.3",
+    "express-session": "^1.17.1",
+    "mongoose": "^5.7.12",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^3.1.4",
+    "passport": "^0.7.0",
+    "passport-local": "latest",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "express-swagger-generator": "^1.1.17"
+  }
+}
