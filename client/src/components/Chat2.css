@@ -33,6 +33,7 @@
     background-color: white;
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #297FE8;
     border-radius: 2px;
     color: white;

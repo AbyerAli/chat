@@ -72,7 +72,7 @@ const Chat2 = ({ userId, username }: { userId: string; username: string }) => {
 					onChange={event => {
 						setRoom(event.target.value)
 					}}
-					className='w-full rounded-3xl'
+					className='w-full rounded-3xl mt-1'
 				/>
 				<button className='m-2 border border-black-50 p-3 w-full rounded-3xl bg-black text-white' onClick={joinRoom}>
 					{' '}
@@ -94,11 +94,16 @@ const Chat2 = ({ userId, username }: { userId: string; username: string }) => {
 						{' '}
 						Send
 					</button>
-					<h1 className='p-2 w-full text-center bg-slate-200 text-xl'>Username</h1>
+					<h1 className='p-2 w-full text-center bg-slate-200 text-xl capitalize'>{username}</h1>
 					<div className='chat flex w-full flex-col p-2'>
 						<div className='messages' id='messagesBox'>
 							{messages.map((msg: any, index) => (
-								<p key={index} className={msg?.user_id == userId ? 'w-fit border border-neutral-50 p-2 rounded-md d-flex justify-end ml-auto myMsg mb-2' : 'otherMsg mb-2'} >{msg.user_name}:{msg.message_text}</p>
+								<p key={index} className={msg?.user_id == userId ? 'w-fit border border-neutral-50 p-2 rounded-md d-flex justify-end ml-auto myMsg mb-2' : 'otherMsg mb-2'} >
+									<span className='font-semibold mr-1 capitalize'>
+										[{msg.user_name}]
+									</span>
+									{msg.message_text}
+								</p>
 							))}
 						</div>
 					</div>

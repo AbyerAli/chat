@@ -99,6 +99,7 @@ io.on("connection", socket => {
         io.in(data.room).emit("receive_message", {
           message_text: messageData.message_text,
           user_name: messageData.user_name, // Send the user's name for display
+          user_id: messageData.user_id,
           room: messageData.room,
           created_at: messageData.created_at
         });
