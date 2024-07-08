@@ -32,3 +32,33 @@ async function seedUsers() {
         },
     ])
 }
+
+
+
+
+
+    // const keyspace = 'default_keyspace';
+
+    // // Create 'users' table
+    // const createUserTableQuery = `
+    // CREATE TABLE IF NOT EXISTS ${keyspace}.users (
+    // user_id uuid PRIMARY KEY,
+    // username text,
+    // password text,
+    // created_at timestamp
+    // );
+    // `;
+    // cassandraClient.execute(createUserTableQuery)
+    // .then(() => console.log('Users table created'))
+    // .catch(e => console.error('Failed to create users table:', e));
+
+    // // Create 'messages' table
+    // const createMessagesTableQuery = `
+    // CREATE TABLE IF NOT EXISTS ${keyspace}.messages (
+    // message_id uuid PRIMARY KEY,
+    // user_id uuid,
+    // message_text text,
+    // created_at timestamp
+    // );
+    // `;
+    // cassandraClient.execute(createMessagesTableQuery)

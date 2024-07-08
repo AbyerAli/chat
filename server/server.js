@@ -6,10 +6,23 @@ const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const srvConfig = require("./config");
-const mongoose = require("mongoose");
-const { DB_URI } = srvConfig;
 let server = http.createServer(app);
+const { Client } = require("cassandra-driver");
+const fs = require("fs");
+const path = require("path");
+
 let messageHistory = [];
+
+// Path to your secure connect bundle
+const secureConnectBundlePath = path.resolve(
+  __dirname,
+  "./secure-connect-chat.zip"
+);
+
+const cassandraClient = new Client({
+  cloud: { secureConnectBundle: secureConnectBundlePath },
+  credentials: { username: "token", password: srvConfig.CASSANDRA_TOKEN }
+});
 
 const { Server } = require("socket.io");
 const io = new Server(server, {
@@ -31,33 +44,26 @@ app.use(
 
 app.use("/api", require("./routes/api"));
 
-server.listen(srvConfig.SERVER_PORT, () => {
-  mongoose.connect(
-    DB_URI,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    },
-    e => {
-      console.log(`Server started on port ${srvConfig.SERVER_PORT}`, e);
-    }
-  );
+// Connect to Cassandra
+cassandraClient
+  .connect()
+  .then(() => {
+    console.log("Connected to Cassandra")
+
+  })
+  .catch(e => console.error("Connection to Cassandra failed", e));
+
+
+server.listen(srvConfig.SERVER_PORT, async () => {
+  try {
+    console.log(`Server started on port ${srvConfig.SERVER_PORT}`);
+  } catch (error) {
+    console.error("Connection to Cassandra failed", error);
+  }
+
 });
 
-// io.on("connection", socket => {
-//   // ... other event handlers ...
-
-//   socket.on("send_message", data => {
-//     // Include the sender's information with the message
-//     const messageData = {
-//       message: data.message,
-//       senderId: socket.user.id, // Assuming you have the user's ID stored in the socket
-//       senderName: socket.user.username // And the username
-//     };
-//     // Emit the message to all users in the room, including the sender
-//     io.in(data.room).emit("receive_message", messageData);
-//   });
-// });
+module.exports.cassandraClient = cassandraClient;
 
 io.on("connection", socket => {
   // Send the message history to the newly connected user
@@ -73,7 +79,6 @@ io.on("connection", socket => {
   });
 
   socket.on("send_message", data => {
-
     const messageData = {
       message: data.message,
       senderId: socket.handshake.auth.token, // Assuming you have the user's ID stored in the socket
