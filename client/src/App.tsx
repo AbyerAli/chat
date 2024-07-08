@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 const ChatPage = lazy(async () => import('pages/ChatPage'))
 
+
 export default function App(): ReactElement {
 	return (
 		<BrowserRouter>
