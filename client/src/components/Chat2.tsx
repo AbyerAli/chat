@@ -98,7 +98,7 @@ const Chat2 = ({ userId, username }: { userId: string; username: string }) => {
 					<div className='chat flex w-full flex-col p-2'>
 						<div className='messages' id='messagesBox'>
 							{messages.map((msg: any, index) => (
-								<p key={index} className={msg?.senderId == userId ? 'w-fit border border-neutral-50 p-2 rounded-md d-flex justify-end ml-auto myMsg mb-2' : 'otherMsg mb-2'} >{msg.message}</p>
+								<p key={index} className={msg?.user_id == userId ? 'w-fit border border-neutral-50 p-2 rounded-md d-flex justify-end ml-auto myMsg mb-2' : 'otherMsg mb-2'} >{msg.user_name}:{msg.message_text}</p>
 							))}
 						</div>
 					</div>
