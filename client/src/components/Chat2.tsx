@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
+import './Chat2.css'
 
 // const socket: Socket = io('http://localhost:3005', {
 // 	auth: {
@@ -41,6 +42,12 @@ const Chat2 = ({ userId, username }: { userId: string; username: string }) => {
 			socket.emit('send_message', { message, room })
 			setMessage('') // Clear the input after sending the message
 		}
+		const messagesBox = document.getElementById('messagesBox')
+		// Scroll to the bottom of the messages box
+		if (messagesBox) {
+			messagesBox.scrollTop = messagesBox.scrollHeight
+		}
+
 	}
 
 	useEffect(() => {
@@ -58,40 +65,47 @@ const Chat2 = ({ userId, username }: { userId: string; username: string }) => {
 	}, [socket])
 
 	return (
-		<div className='chat flex w-52 flex-col'>
-			<input
-				placeholder='Room Number...'
-				onChange={event => {
-					setRoom(event.target.value)
-				}}
-			/>
-			<button className='m-2 border border-neutral-50 p-3' onClick={joinRoom}>
-				{' '}
-				Join Room
-			</button>
-			<input
-				placeholder='Message...'
-				value={message} // Add this line to control the input
-				onChange={event => {
-					setMessage(event.target.value)
-				}}
-			/>
-			<button
-				className='m-2 border border-neutral-50 p-3'
-				onClick={sendMessage}
-			>
-				{' '}
-				Send Message
-			</button>
-			<h1> Messages:</h1>
-			<div className='chat flex w-52 flex-col'>
-				<div className='messages'>
-					{messages.map((msg: any, index) => (
-						<p key={index} className={msg?.senderId == userId ? 'border border-neutral-50 p-3 rounded-md': ''} >{msg.message}</p>
-					))}
+		<div className='flex flex-col justify-center items-center'>
+			<div className='chat flex w-2/5 flex-col justify-center items-center'>
+				<input
+					placeholder='Room Number...'
+					onChange={event => {
+						setRoom(event.target.value)
+					}}
+					className='w-full rounded-3xl'
+				/>
+				<button className='m-2 border border-black-50 p-3 w-full rounded-3xl bg-black text-white' onClick={joinRoom}>
+					{' '}
+					Join Room
+				</button>
+				<div className='ChatBox'>
+					<input
+						className='chatTextArea m-2'
+						placeholder='Message...'
+						value={message} // Add this line to control the input
+						onChange={event => {
+							setMessage(event.target.value)
+						}}
+					/>
+					<button
+						className='m-2 p-3 chatBtn text-center'
+						onClick={sendMessage}
+					>
+						{' '}
+						Send
+					</button>
+					<h1 className='p-2 w-full text-center bg-slate-200 text-xl'>Username</h1>
+					<div className='chat flex w-full flex-col p-2'>
+						<div className='messages' id='messagesBox'>
+							{messages.map((msg: any, index) => (
+								<p key={index} className={msg?.senderId == userId ? 'w-fit border border-neutral-50 p-2 rounded-md d-flex justify-end ml-auto myMsg mb-2' : 'otherMsg mb-2'} >{msg.message}</p>
+							))}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
+
 	)
 }
 
