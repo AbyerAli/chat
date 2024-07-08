@@ -7,22 +7,8 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const srvConfig = require("./config");
 let server = http.createServer(app);
-const { Client } = require("cassandra-driver");
-const fs = require("fs");
-const path = require("path");
 
 let messageHistory = [];
-
-// Path to your secure connect bundle
-const secureConnectBundlePath = path.resolve(
-  __dirname,
-  "./secure-connect-chat.zip"
-);
-
-const cassandraClient = new Client({
-  cloud: { secureConnectBundle: secureConnectBundlePath },
-  credentials: { username: "token", password: srvConfig.CASSANDRA_TOKEN }
-});
 
 const { Server } = require("socket.io");
 const io = new Server(server, {
@@ -44,26 +30,16 @@ app.use(
 
 app.use("/api", require("./routes/api"));
 
-// Connect to Cassandra
-cassandraClient
-  .connect()
-  .then(() => {
-    console.log("Connected to Cassandra")
-
-  })
-  .catch(e => console.error("Connection to Cassandra failed", e));
-
 
 server.listen(srvConfig.SERVER_PORT, async () => {
   try {
+    // await db.cassandraClient.connect()
     console.log(`Server started on port ${srvConfig.SERVER_PORT}`);
   } catch (error) {
     console.error("Connection to Cassandra failed", error);
   }
 
 });
-
-module.exports.cassandraClient = cassandraClient;
 
 io.on("connection", socket => {
   // Send the message history to the newly connected user
