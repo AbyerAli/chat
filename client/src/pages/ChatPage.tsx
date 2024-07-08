@@ -10,10 +10,10 @@ const ChatPage = () => {
 
 	return (
 		<div>
-			<h1>Welcome to the Real-Time Chat App</h1>
+			<h1 className='text-xl text-center bg-slate-300 p-5 font-bold'>Real-Time Chat App</h1>
 			{userId ? (
 				// If the user is logged in, render the Chat component
-				<Chat2 userId={userId} />
+				<Chat2 userId={userId} username={username} />
 			) : (
 				<Login
 					username={username}
