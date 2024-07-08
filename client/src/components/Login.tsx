@@ -14,7 +14,9 @@ const Login = ({
 	setPassword,
 	setUserId
 }: LoginProps) => {
+	
 	const [signup, setSignup] = useState(false)
+
 	const handleLogin = async () => {
 		const res = await fetch('http://localhost:3005/api/v1/auth/login', {
 			method: 'POST',
@@ -36,8 +38,8 @@ const Login = ({
 		}
 		console.log(data)
 	}
-	const handleSignup = async () => {
-		const res = await fetch('http://localhost:3005/api/v1/auth/login', {
+	const handleRegister = async () => {
+		const res = await fetch('http://localhost:3005/api/v1/auth/register', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -49,11 +51,7 @@ const Login = ({
 		})
 		const data = await res.json()
 		if (data?.status == 'OK') {
-			setUserId(data.id)
-			localStorage.setItem('username', data.username)
-			localStorage.setItem('userId', data.id)
-		} else {
-			alert('invalid credentials')
+			alert('user created')
 		}
 		console.log(data)
 	}
@@ -81,7 +79,7 @@ const Login = ({
 							<form
 								onSubmit={e => {
 									e.preventDefault()
-									handleSignup()
+									handleRegister()
 								}}
 							>
 								<div className='grid gap-y-4'>

@@ -3,7 +3,7 @@ interface LoginProps {
 	setUsername: React.Dispatch<React.SetStateAction<string>>
 	password: string
 	setPassword: React.Dispatch<React.SetStateAction<string>>
-	setUserId: React.Dispatch<React.SetStateAction<string|null>>
+	setUserId: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 const Signup = ({
@@ -27,11 +27,29 @@ const Signup = ({
 		const data = await res.json()
 		if (data?.status == 'OK') {
 			setUserId(data.id)
-      localStorage.setItem('username', data.username)
-      localStorage.setItem('userId', data.id)
+			localStorage.setItem('username', data.username)
+			localStorage.setItem('userId', data.id)
 		} else {
-      alert('invalid credentials')
-    }
+			alert('invalid credentials')
+		}
+		console.log(data)
+	}
+
+	const handlesignup = async () => {
+		const res = await fetch('http://localhost:3005/api/v1/auth/register', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				username: username,
+				password: password
+			})
+		})
+		const data = await res.json()
+		if (data?.status == 'OK') {
+			alert('user created')
+		}
 		console.log(data)
 	}
 

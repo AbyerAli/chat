@@ -65,8 +65,8 @@ authRouter.post("/login", function(req, res, next) {
 });
 
 authRouter.post("/register", async (req, res) => {
-  let { name, username, password } = req.body;
-  if (!name || !username || !password) {
+  let { username, password } = req.body;
+  if (!username || !password) {
     return res.status(409).json({
       success: false,
       message: "All fields are required!"
@@ -85,19 +85,20 @@ authRouter.post("/register", async (req, res) => {
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(password, salt);
         const queryCreateUser =
-          "INSERT INTO users (user_id, name, username, password, created_at) VALUES (uuid(), ?, ?, ?, toTimestamp(now()))";
+          "INSERT INTO users (user_id, username, password, created_at) VALUES (uuid(), ?, ?, toTimestamp(now()))";
         await cassandraClient.execute(
           queryCreateUser,
-          [name, username, hashedPassword],
+          [username, hashedPassword],
           { prepare: true }
         );
         return res.status(201).json({
           success: true,
-          message: "User is successfully registered!"
+          message: "User is successfully registered!",
+          status: "OK"
         });
       }
     })
-    .catch(err => res.json({ success: false, error: true }));
+    .catch(err => res.json({ success: false, error: true, err }));
 });
 
 module.exports = authRouter;

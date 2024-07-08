@@ -7,6 +7,7 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const srvConfig = require("./config");
 let server = http.createServer(app);
+const cassandraClient = require("../../../database/connection");
 
 let messageHistory = [];
 
@@ -33,7 +34,6 @@ app.use("/api", require("./routes/api"));
 
 server.listen(srvConfig.SERVER_PORT, async () => {
   try {
-    // await db.cassandraClient.connect()
     console.log(`Server started on port ${srvConfig.SERVER_PORT}`);
   } catch (error) {
     console.error("Connection to Cassandra failed", error);
