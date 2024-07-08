@@ -13,7 +13,7 @@ const ChatPage = () => {
 			<h1>Welcome to the Real-Time Chat App</h1>
 			{userId ? (
 				// If the user is logged in, render the Chat component
-				<Chat2 userId={userId} />
+				<Chat2 userId={userId} username={username} />
 			) : (
 				<Login
 					username={username}
