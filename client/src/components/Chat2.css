@@ -1,0 +1,58 @@
+.ChatBox{
+    background-color: white;
+    /* height: 600px; */
+    width: 100%;
+    position: relative;
+    background-color: #f1f5f9;
+    padding-bottom: 75px;  
+}
+.messages{
+    height: 450px;
+    overflow-y: scroll;
+}
+.messages {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+.chatTextArea{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 79%;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    align-items: center
+}
+.chatBtn{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 18%;
+    height: 50px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    background-color: #297FE8;
+    border-radius: 2px;
+    color: white;
+}
+.otherMsg{
+    background-color: #fff;
+    width: fit-content;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    font-size: 13px;
+    padding: 8px 15px;
+    /* margin: 5px 0; */
+}
+.myMsg{
+    background-color: #297FE8;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 13px;
+    padding: 8px 15px;
+    /* margin: 5px 0; */
+}
